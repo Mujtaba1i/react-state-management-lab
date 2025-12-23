@@ -86,17 +86,25 @@ function App() {
   },
 ]
   const [team, setTeam] = useState([])
+  // console.log(team)
   const [money, setMoney] = useState(100)
-  const [strength, setStrength] = useState(0)
-  const [agility, setAgility] = useState(0)
+  // const [strength, setStrength] = useState(0)
+  // const [agility, setAgility] = useState(0)
+  let strength = 0
+  let agility = 0
   const [zombieFighters, setZombieFighters] = useState(charecters)
   const [alertMessage, setAlertMessage] = useState('')
+
+  team.forEach((member)=>{
+    strength += member.strength
+    agility += member.agility
+  })
 
   function handleAddFigther(fighter){
     if (money >= fighter.price){
       setMoney(money - fighter.price)
-      setStrength(strength + fighter.strength)
-      setAgility(agility + fighter.agility)
+      // setStrength(strength + fighter.strength)
+      // setAgility(agility + fighter.agility)
       const filterFighters = zombieFighters.filter(oneFighter => oneFighter.id !== fighter.id)
       setZombieFighters(filterFighters)
       setTeam([...team,fighter])
@@ -108,15 +116,12 @@ function App() {
 
   function handlRemoveFighter(fighter){
     setMoney(money + fighter.price)
-    setStrength(strength - fighter.strength)
-    setAgility(agility - fighter.agility)
+    // setStrength(strength - fighter.strength)
+    // setAgility(agility - fighter.agility)
     const filterFighters = team.filter(oneFighter => oneFighter.id !== fighter.id)
     setTeam(filterFighters)
     setZombieFighters([...zombieFighters,fighter])  
   }
-
-  useEffect(()=>{console.log(team)},[team])
-
 
   return (
     <>
