@@ -90,15 +90,19 @@ function App() {
   const [strength, setStrength] = useState(0)
   const [agility, setAgility] = useState(0)
   const [zombieFighters, setZombieFighters] = useState(charecters)
+  const [alertMessage, setAlertMessage] = useState('')
 
   function handleAddFigther(fighter){
-    if (money > fighter.price){
+    if (money >= fighter.price){
       setMoney(money - fighter.price)
       setStrength(strength + fighter.strength)
       setAgility(agility + fighter.agility)
       const filterFighters = zombieFighters.filter(oneFighter => oneFighter.id !== fighter.id)
       setZombieFighters(filterFighters)
       setTeam([...team,fighter])
+    }
+    else{
+      setAlertMessage('You don\'t have enough money')
     }
   }
 
@@ -121,6 +125,7 @@ function App() {
       <h3>strength: {strength}</h3>
       <h3>agility: {agility}</h3>
       <h3>Team</h3>
+      <p className="alert">{alertMessage}</p>
       <ul>{team.length === 0 ? 'Pick some team members' : team.map(charecter => <li key={charecter.id}><img src={charecter.img} alt={charecter.name} /> {charecter.name}, Price: {charecter.price}, Strength: {charecter.strength}, Agility: {charecter.agility} <button onClick={()=>{handlRemoveFighter(charecter)}}>Remove</button> </li>) }</ul>
       <h3>Fighters</h3>
       <ul>{zombieFighters.map(charecter => <li key={charecter.id}><img src={charecter.img} alt={charecter.name} /> {charecter.name}, Price: {charecter.price}, Strength: {charecter.strength}, Agility: {charecter.agility} <button onClick={()=>{handleAddFigther(charecter)}}>Add</button> </li>)}</ul>
